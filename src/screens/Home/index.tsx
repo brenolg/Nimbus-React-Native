@@ -1,15 +1,26 @@
-import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "../../theme/ThemeProvider";
 
-const Home = () => {
+export default function Home() {
+  const { theme } = useTheme();
+
   return (
-    <SafeAreaView>
-      <Text>Home</Text>
-    </SafeAreaView>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
+      <SafeAreaView style={styles.safe}>
+        <Text style={{ color: theme.colors.text }}>Home</Text>
+      </SafeAreaView>
+    </View>
   );
-};
+}
 
-export default Home;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  safe: {
+    flex: 1,
+  },
+});
