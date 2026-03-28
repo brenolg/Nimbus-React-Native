@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import EmptyState from "../../components/EmptyState";
 import ErrorModal from "../../components/ErrorModal";
+import ThemeToggle from "../../components/inputs/ThemeToggle";
 import Loading from "../../components/Loading";
 import { useFetch } from "../../hooks/useFetch";
 import { useTheme } from "../../theme/ThemeProvider";
@@ -29,7 +30,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(data, error);
+    // console.log(data, error);
   }, [data, loading, error]);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function Home() {
     >
       <SafeAreaView style={styles.safe}>
         <Text style={{ color: theme.colors.text }}>Home</Text>
+        <ThemeToggle />
 
         <EmptyState
           title="Sem dados"
