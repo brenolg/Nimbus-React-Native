@@ -1,6 +1,7 @@
 import ErrorModal from "@/components//ErrorModal";
 import Loading from "@/components//Loading";
 import EmptyState from "@/components/EmptyState";
+import ForecastList from "@/components/ForecastList";
 import { useFetch } from "@/hooks/useFetch";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useEffect, useState } from "react";
@@ -12,7 +13,7 @@ export default function Home() {
   const [showError, setShowError] = useState(false);
 
   const { data, loading, error, fetchData } = useFetch({
-    url: "https://api.openweathermap.org/data/2.5/weather",
+    url: "https://api.openweathermap.org/data/2.5/forecast",
   });
 
   useEffect(() => {
@@ -29,15 +30,13 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(data, error, loading);
-  }, [data, loading, error]);
-
-  useEffect(() => {
     if (error) {
       setShowError(true);
     }
   }, [error]);
 
+  const isEmpty = !data && !loading && !error;
+  const hasData = !!data;
   return (
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
@@ -45,14 +44,20 @@ export default function Home() {
       <SafeAreaView style={styles.safe}>
         <Text style={{ color: theme.colors.text }}>Home</Text>
 
-        <EmptyState
-          title="Sem dados"
-          description="Não foi possível carregar o clima"
-          icon="cloud-offline-outline"
-        />
         {/* LOADING */}
         {loading && <Loading />}
-        {/* Modal de erro */}
+
+        {hasData && <ForecastList data={data} />}
+
+        {/* EMPTY */}
+        {isEmpty && (
+          <EmptyState
+            title="Sem dados"
+            description="Não foi possível carregar o clima"
+            icon="cloud-offline-outline"
+          />
+        )}
+        {/* ERROR */}
         <ErrorModal
           visible={showError}
           message={error}
