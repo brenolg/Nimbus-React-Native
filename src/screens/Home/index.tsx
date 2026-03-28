@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ErrorModal from "../../components/ErrorModal";
+import Loading from "../../components/Loading";
 import { useFetch } from "../../hooks/useFetch";
 import { useTheme } from "../../theme/ThemeProvider";
 
@@ -43,6 +44,8 @@ export default function Home() {
       <SafeAreaView style={styles.safe}>
         <Text style={{ color: theme.colors.text }}>Home</Text>
 
+        {/* LOADING */}
+        {loading && <Loading />}
         {/* Modal de erro */}
         <ErrorModal
           visible={showError}
