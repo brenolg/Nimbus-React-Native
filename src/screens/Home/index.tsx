@@ -1,5 +1,4 @@
 import ErrorModal from "@/components//ErrorModal";
-import ThemeToggle from "@/components//inputs/ThemeToggle";
 import Loading from "@/components//Loading";
 import EmptyState from "@/components/EmptyState";
 import { useFetch } from "@/hooks/useFetch";
@@ -30,7 +29,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // console.log(data, error);
+    console.log(data, error, loading);
   }, [data, loading, error]);
 
   useEffect(() => {
@@ -45,7 +44,6 @@ export default function Home() {
     >
       <SafeAreaView style={styles.safe}>
         <Text style={{ color: theme.colors.text }}>Home</Text>
-        <ThemeToggle />
 
         <EmptyState
           title="Sem dados"
