@@ -1,12 +1,12 @@
+import ErrorModal from "@/components//ErrorModal";
+import ThemeToggle from "@/components//inputs/ThemeToggle";
+import Loading from "@/components//Loading";
+import EmptyState from "@/components/EmptyState";
+import { useFetch } from "@/hooks/useFetch";
+import { useTheme } from "@/theme/ThemeProvider";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import EmptyState from "../../components/EmptyState";
-import ErrorModal from "../../components/ErrorModal";
-import ThemeToggle from "../../components/inputs/ThemeToggle";
-import Loading from "../../components/Loading";
-import { useFetch } from "../../hooks/useFetch";
-import { useTheme } from "../../theme/ThemeProvider";
 
 export default function Home() {
   const { theme } = useTheme();
