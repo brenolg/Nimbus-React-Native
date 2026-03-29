@@ -30,6 +30,9 @@ export default function ForecastList() {
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
         showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingHorizontal: 36,
+        }}
         renderItem={({ item }) => <ForecastCard item={item} />}
       />
     </View>

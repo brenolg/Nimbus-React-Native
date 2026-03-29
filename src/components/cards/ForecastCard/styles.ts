@@ -5,11 +5,8 @@ export const createStyles = (theme: any) =>
     card: {
       borderRadius: 12,
       padding: 12,
-      width: 140,
+      width: 90,
       marginRight: 12,
-      backgroundColor: theme.colors.card,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
     },
     time: {
       fontSize: 16,
@@ -17,10 +14,13 @@ export const createStyles = (theme: any) =>
       color: theme.colors.secondaryText,
       marginBottom: 12,
       fontWeight: "500",
+      borderRadius: 6,
+      borderWidth: 1,
+      borderColor: theme.colors.background,
     },
     icon: {
       width: 70,
-      height: 90,
+      height: 70,
       alignSelf: "center",
     },
     temp: {
@@ -46,5 +46,11 @@ export const createStyles = (theme: any) =>
       color: theme.colors.text,
       marginLeft: 4,
       lineHeight: 14,
+    },
+    hint: {
+      position: "absolute",
+      bottom: 12,
+      right: 0,
+      opacity: 0.6,
     },
   });

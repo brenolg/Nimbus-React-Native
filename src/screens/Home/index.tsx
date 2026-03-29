@@ -2,6 +2,7 @@ import ErrorModal from "@/components//ErrorModal";
 import Loading from "@/components//Loading";
 import EmptyState from "@/components/EmptyState";
 import ForecastList from "@/components/ForecastList";
+import SelectedForecast from "@/components/SelectedForecast";
 import { useWeather } from "@/context/WeatherContext"; // 👈 NOVO
 import { formatDayOfWeek } from "@/helpers/formatDate";
 import { useFetch } from "@/hooks/useFetch";
@@ -19,7 +20,8 @@ export default function Home() {
 
   const [showError, setShowError] = useState(false);
 
-  const { setResponse, response, scrollForecast } = useWeather();
+  const { setResponse, response, scrollForecast, setSelectedForecast } =
+    useWeather();
 
   const { data, loading, error, fetchData } = useFetch<ForecastResponseType>({
     url: "https://api.openweathermap.org/data/2.5/forecast",
@@ -40,6 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     if (data) {
+      setSelectedForecast(data.list[0]);
       setResponse(data);
     }
   }, [data]);
@@ -52,53 +55,52 @@ export default function Home() {
   const current = data?.list[0];
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.safe}>
-        {data && current && (
-          <View style={styles.header}>
-            {/* Cidade */}
-            <View style={styles.locationRow}>
-              <Feather name="map-pin" size={14} color={theme.colors.primary} />
-              <Text style={styles.locationText}>{data.city.name}</Text>
-            </View>
-
-            {/* Temperatura */}
-            <Text style={styles.temp}>{Math.round(current.main.temp)}°C</Text>
-
-            {/* Descrição */}
-            <Text style={styles.description}>
-              {current.weather[0].description}
-            </Text>
-
-            <Text style={styles.description}>
-              {formatDayOfWeek((scrollForecast ?? current)?.dt_txt || "")}
-            </Text>
-            {/* Divider */}
-            <View style={styles.divider} />
+    <SafeAreaView style={styles.safe}>
+      {data && current && (
+        <View style={styles.header}>
+          {/* Cidade */}
+          <View style={styles.locationRow}>
+            <Feather name="map-pin" size={14} color={theme.colors.primary} />
+            <Text style={styles.locationText}>{data.city.name}</Text>
           </View>
-        )}
 
-        {/* LOADING */}
-        {loading && <Loading />}
+          {/* Temperatura */}
+          <Text style={styles.temp}>{Math.round(current.main.temp)}°C</Text>
 
-        <ForecastList />
+          {/* Descrição */}
+          <Text style={styles.description}>
+            {current.weather[0].description}
+          </Text>
 
-        {/* EMPTY */}
-        {isEmpty && (
-          <EmptyState
-            title="Sem dados"
-            description="Não foi possível carregar o clima"
-            icon="cloud-offline-outline"
-          />
-        )}
+          <Text style={styles.description}>
+            {formatDayOfWeek((scrollForecast ?? current)?.dt_txt || "")}
+          </Text>
+          {/* Divider */}
+          <View style={styles.divider} />
+        </View>
+      )}
 
-        {/* ERROR */}
-        <ErrorModal
-          visible={showError}
-          message={error}
-          onClose={() => setShowError(false)}
+      {/* LOADING */}
+      {loading && <Loading />}
+
+      <ForecastList />
+      <SelectedForecast />
+
+      {/* EMPTY */}
+      {isEmpty && (
+        <EmptyState
+          title="Sem dados"
+          description="Não foi possível carregar o clima"
+          icon="cloud-offline-outline"
         />
-      </SafeAreaView>
-    </View>
+      )}
+
+      {/* ERROR */}
+      <ErrorModal
+        visible={showError}
+        message={error}
+        onClose={() => setShowError(false)}
+      />
+    </SafeAreaView>
   );
 }
