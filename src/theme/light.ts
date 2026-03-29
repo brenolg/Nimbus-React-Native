@@ -1,12 +1,12 @@
 export const lightTheme = {
   mode: "light",
   colors: {
-    primary: "#6200ee",
-    background: "#F5F6FA",
-    card: "#FFFFFF",
-    text: "#1C1C1E",
-    secondaryText: "#6B7280",
-    border: "#E5E7EB",
+    primary: "#1E3A8A",
+    background: "#D1D5DB",
+    card: "#E5E7EB",
+    text: "#0F172A",
+    secondaryText: "#1F2937",
+    border: "#9CA3AF",
     danger: "#EF4444",
   },
 };
