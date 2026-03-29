@@ -4,6 +4,7 @@ import EmptyState from "@/components/EmptyState";
 import ForecastList from "@/components/ForecastList";
 import { useFetch } from "@/hooks/useFetch";
 import { useTheme } from "@/theme/ThemeProvider";
+import { ForecastResponseType } from "@/types/weather";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,7 +13,7 @@ export default function Home() {
   const { theme } = useTheme();
   const [showError, setShowError] = useState(false);
 
-  const { data, loading, error, fetchData } = useFetch({
+  const { data, loading, error, fetchData } = useFetch<ForecastResponseType>({
     url: "https://api.openweathermap.org/data/2.5/forecast",
   });
 
@@ -47,7 +48,7 @@ export default function Home() {
         {/* LOADING */}
         {loading && <Loading />}
 
-        {hasData && <ForecastList data={data} />}
+        {hasData && <ForecastList data={data.list} />}
 
         {/* EMPTY */}
         {isEmpty && (

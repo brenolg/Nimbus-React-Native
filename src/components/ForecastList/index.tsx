@@ -1,23 +1,21 @@
+import { ForecastListType } from "@/types/weather";
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
 type Props = {
-  data: any;
+  readonly data: ForecastListType;
 };
 
 export default function ForecastList({ data }: Props) {
-  console.log(data.list[0]);
-
-  if (!data?.list) return null;
+  if (!data) return null;
 
   return (
     <View style={{ marginTop: 20 }}>
       <FlatList
-        data={data.list}
+        data={data}
         keyExtractor={(item) => item.dt.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 16, marginTop: 10 }}
         renderItem={({ item }) => {
           return (
             <View style={styles.card}>
@@ -58,7 +56,7 @@ export default function ForecastList({ data }: Props) {
 
 const styles = StyleSheet.create({
   card: {
-    width: 100,
+    width: 150,
     padding: 12,
     borderRadius: 16,
     alignItems: "center",

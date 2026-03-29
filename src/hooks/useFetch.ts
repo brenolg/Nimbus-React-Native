@@ -6,7 +6,12 @@ type UseFetchProps = {
   config?: AxiosRequestConfig;
 };
 
-export function useFetch<T = any>({ url, config }: UseFetchProps) {
+type ApiError = {
+  message?: string;
+  cod?: string;
+};
+
+export function useFetch<T>({ url, config }: UseFetchProps) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +22,7 @@ export function useFetch<T = any>({ url, config }: UseFetchProps) {
         setLoading(true);
         setError(null);
 
-        const response = await axios({
+        const response = await axios<T>({
           url,
           ...config,
           ...customConfig,
@@ -27,11 +32,13 @@ export function useFetch<T = any>({ url, config }: UseFetchProps) {
       } catch (err: unknown) {
         let message = "Erro na requisição";
 
-        if (isAxiosError(err)) {
+        if (isAxiosError<ApiError>(err)) {
           message =
             err.response?.data?.message ||
             err.response?.statusText ||
             err.message;
+        } else if (err instanceof Error) {
+          message = err.message;
         }
 
         setError(message);
