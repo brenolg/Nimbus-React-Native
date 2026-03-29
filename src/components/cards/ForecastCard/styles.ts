@@ -3,9 +3,13 @@ import { StyleSheet } from "react-native";
 export const createStyles = (theme: any) =>
   StyleSheet.create({
     card: {
-      width: 120,
-      padding: 14,
-      borderRadius: 20,
+      borderRadius: 12,
+      padding: 12,
+      width: 140,
+      marginRight: 12,
+      backgroundColor: theme.colors.card,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
     time: {
       fontSize: 16,
@@ -15,7 +19,7 @@ export const createStyles = (theme: any) =>
       fontWeight: "500",
     },
     icon: {
-      width: 90,
+      width: 70,
       height: 90,
       alignSelf: "center",
     },
@@ -29,7 +33,6 @@ export const createStyles = (theme: any) =>
       fontSize: 14,
       color: theme.colors.text,
       textAlign: "center",
-
       marginBottom: 12,
       lineHeight: 14,
     },
