@@ -78,7 +78,7 @@ export default function SelectedForecast() {
       {/* Pressão*/}
       <View style={styles.item}>
         <View style={styles.header}>
-          <Feather name="activity" size={16} color={theme.colors.primary} />
+          <Feather name="bar-chart-2" size={16} color={theme.colors.primary} />
           <Text style={styles.label}>Pressão</Text>
         </View>
         <Text style={styles.value}>{selectedForecast.main.pressure} hPa</Text>
