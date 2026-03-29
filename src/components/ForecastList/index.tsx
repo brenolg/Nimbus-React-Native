@@ -1,3 +1,4 @@
+import { formatDateTime } from "@/helpers/formatDate";
 import { ForecastListType } from "@/types/weather";
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
@@ -8,6 +9,8 @@ type Props = {
 
 export default function ForecastList({ data }: Props) {
   if (!data) return null;
+
+  console.log(data[0]);
 
   return (
     <View style={{ marginTop: 20 }}>
@@ -20,7 +23,7 @@ export default function ForecastList({ data }: Props) {
           return (
             <View style={styles.card}>
               {/* Hora */}
-              <Text>{item.dt_txt}</Text>
+              <Text>{formatDateTime(item.dt_txt)}</Text>
               {/* Descrição */}
               <Text>{item.weather[0].description}</Text>
               <Image
@@ -31,15 +34,16 @@ export default function ForecastList({ data }: Props) {
               />
 
               {/* Temperatura */}
-              <Text>{item.main.temp}</Text>
+              <Text>{Math.round(item.main.temp)}°C</Text>
               {/* Sessação térmica */}
-              <Text>{item.main.feels_like}</Text>
+              <Text>{Math.round(item.main.feels_like)}°C</Text>
               {/*variação no período */}
               <Text>
-                {item.main.temp_min} {item.main.temp_max}
+                ↓ {Math.round(item.main.temp_min)}°C ↑{" "}
+                {Math.round(item.main.temp_max)}°C
               </Text>
               {/* Umidade */}
-              <Text>{item.main.humidity}</Text>
+              <Text>{item.main.humidity}%</Text>
               {/* Velocidade do vento*/}
               <Text> {item.wind.speed}</Text>
               {/*Probabilidade de chuva */}
