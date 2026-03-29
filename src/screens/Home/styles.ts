@@ -38,12 +38,13 @@ export const createStyles = (theme: any) =>
       color: theme.colors.secondaryText,
       fontSize: 14,
       fontWeight: "500",
+      marginTop: 16,
     },
 
     divider: {
       height: 1,
       backgroundColor: theme.colors.border,
-      marginVertical: 16,
+      marginBottom: 16,
       opacity: 0.6,
     },
   });

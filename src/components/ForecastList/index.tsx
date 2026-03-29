@@ -1,16 +1,25 @@
-import { ForecastListType } from "@/types/weather";
-import React from "react";
+import { useWeather } from "@/context/WeatherContext";
+import React, { useRef } from "react";
 import { FlatList, View } from "react-native";
 import ForecastCard from "../cards/ForecastCard";
 
-type Props = {
-  readonly data: ForecastListType;
-};
+export default function ForecastList() {
+  const { response, setScrollForecast } = useWeather();
 
-export default function ForecastList({ data }: Props) {
+  const data = response?.list;
+
+  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      setScrollForecast(viewableItems[0].item);
+    }
+  }).current;
   if (!data) return null;
 
   console.log(data[0]);
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
 
   return (
     <View>
@@ -18,6 +27,8 @@ export default function ForecastList({ data }: Props) {
         data={data}
         keyExtractor={(item) => item.dt.toString()}
         horizontal
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => <ForecastCard item={item} />}
       />

@@ -2,6 +2,8 @@ import ErrorModal from "@/components//ErrorModal";
 import Loading from "@/components//Loading";
 import EmptyState from "@/components/EmptyState";
 import ForecastList from "@/components/ForecastList";
+import { useWeather } from "@/context/WeatherContext"; // 👈 NOVO
+import { formatDayOfWeek } from "@/helpers/formatDate";
 import { useFetch } from "@/hooks/useFetch";
 import { useTheme } from "@/theme/ThemeProvider";
 import { ForecastResponseType } from "@/types/weather";
@@ -16,6 +18,8 @@ export default function Home() {
   const styles = createStyles(theme);
 
   const [showError, setShowError] = useState(false);
+
+  const { setResponse, response, scrollForecast } = useWeather();
 
   const { data, loading, error, fetchData } = useFetch<ForecastResponseType>({
     url: "https://api.openweathermap.org/data/2.5/forecast",
@@ -35,11 +39,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (data) {
+      setResponse(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (error) setShowError(true);
   }, [error]);
 
-  const isEmpty = !data && !loading && !error;
-  const hasData = !!data;
+  const isEmpty = !response?.list?.length && !loading;
   const current = data?.list[0];
 
   return (
@@ -60,16 +69,19 @@ export default function Home() {
             <Text style={styles.description}>
               {current.weather[0].description}
             </Text>
+
+            <Text style={styles.description}>
+              {formatDayOfWeek((scrollForecast ?? current)?.dt_txt || "")}
+            </Text>
+            {/* Divider */}
+            <View style={styles.divider} />
           </View>
         )}
-
-        {/* Divider */}
-        <View style={styles.divider} />
 
         {/* LOADING */}
         {loading && <Loading />}
 
-        {hasData && <ForecastList data={data.list} />}
+        <ForecastList />
 
         {/* EMPTY */}
         {isEmpty && (

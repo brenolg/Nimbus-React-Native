@@ -1,13 +1,13 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { WeatherProvider } from "@/context/WeatherContext";
 import Navigation from "./src/navigation";
 import { AppThemeProvider } from "./src/theme/ThemeProvider";
 
-const Stack = createNativeStackNavigator();
-
 export default function App() {
   return (
-    <AppThemeProvider>
-      <Navigation />
-    </AppThemeProvider>
+    <WeatherProvider>
+      <AppThemeProvider>
+        <Navigation />
+      </AppThemeProvider>
+    </WeatherProvider>
   );
 }
