@@ -104,7 +104,7 @@ Os dados são consumidos da API pública:
 1. Clone o repositório
 
 ```bash
-git clone [https://github.com/brenolg/User-Chat-React-Native.git](https://github.com/brenolg/Nimbus-React-Native.git)
+git clone https://github.com/brenolg/Nimbus-React-Native.git
 ```
 2. Acesse a pasta do projeto
 ```bash
