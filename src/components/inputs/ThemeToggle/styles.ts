@@ -5,7 +5,7 @@ export const createStyles = (theme: any) =>
     container: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 6,
+      marginLeft: 24,
     },
     switch: {
       transform: [{ scale: 0.85 }],

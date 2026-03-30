@@ -15,7 +15,7 @@ export default function ThemeToggle() {
     <View style={styles.container}>
       <Ionicons
         name="sunny"
-        size={18}
+        size={12}
         color={isDark ? theme.colors.text : theme.colors.primary}
       />
 
@@ -32,7 +32,7 @@ export default function ThemeToggle() {
 
       <Ionicons
         name="moon"
-        size={18}
+        size={12}
         color={isDark ? theme.colors.primary : theme.colors.text}
       />
     </View>

@@ -1,8 +1,8 @@
+import SearchButton from "@/components/button/SearchButton";
 import ThemeToggle from "@/components/inputs/ThemeToggle";
 import { useTheme } from "@/theme/ThemeProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View } from "react-native";
 import Home from "../screens/Home";
 import { createHeaderOptions } from "./headerConfig";
 import { createNavigationTheme } from "./navigationTheme";
@@ -26,12 +26,9 @@ export default function Navigation() {
           name="Home"
           component={Home}
           options={createHeaderOptions({
-            title: "Clima",
-            right: (
-              <View>
-                <ThemeToggle />
-              </View>
-            ),
+            title: "Nimbus",
+            left: <ThemeToggle />,
+            right: <SearchButton />,
           })}
         />
       </Stack.Navigator>

@@ -1,3 +1,4 @@
+import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { ReactNode } from "react";
 
 type HeaderProps = {
@@ -6,8 +7,13 @@ type HeaderProps = {
   left?: ReactNode;
 };
 
-export const createHeaderOptions = ({ title, right, left }: HeaderProps) => ({
+export const createHeaderOptions = ({
   title,
+  right,
+  left,
+}: HeaderProps): NativeStackNavigationOptions => ({
+  title,
+  headerTitleAlign: "center",
   headerRight: right ? () => right : undefined,
   headerLeft: left ? () => left : undefined,
 });
