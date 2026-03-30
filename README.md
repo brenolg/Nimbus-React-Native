@@ -122,7 +122,7 @@ EXPO_PUBLIC_WEATHER_KEY=SUA_API_KEY_AQUI
 ```bash
 npx expo start
 ```
-5. Execute no dispositivo
+6. Execute no dispositivo
 
 Você pode rodar o app de várias formas:
 
