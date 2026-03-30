@@ -1,7 +1,9 @@
+import { useWeather } from "@/context/WeatherContext";
 import { formatDateToHour } from "@/helpers/formatDate";
 import { useTheme } from "@/theme/ThemeProvider";
 import { WeatherItemType } from "@/types/weather";
 import { Feather } from "@expo/vector-icons";
+import { memo } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { createStyles } from "./styles";
 
@@ -9,8 +11,6 @@ type Props = {
   readonly item: WeatherItemType;
 };
 
-import { useWeather } from "@/context/WeatherContext";
-import { memo } from "react";
 export function ForecastCard({ item }: Props) {
   const { theme } = useTheme();
   const styles = createStyles(theme);

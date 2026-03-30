@@ -15,12 +15,11 @@ export default function Home() {
   const styles = createStyles(theme);
   const { response, scrollForecast, setCitySearch } = useWeather();
 
+  // Dados do dia atual
   const current = response?.list[0];
 
   return (
     <SafeAreaView style={styles.safe}>
-      {/* CONTEÚDO */}
-
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Dados do dia */}
         {response && (

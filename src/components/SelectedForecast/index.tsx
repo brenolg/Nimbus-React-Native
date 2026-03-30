@@ -6,7 +6,7 @@ import { Text, View } from "react-native";
 import { createStyles } from "./styles";
 
 export default function SelectedForecast() {
-  const { selectedForecast } = useWeather();
+  const { selectedForecast } = useWeather(); // Dados do forecast selecionado
   const { theme } = useTheme();
   const styles = createStyles(theme);
 

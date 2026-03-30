@@ -3,6 +3,7 @@ import { useTheme } from "@/theme/ThemeProvider";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { FlatList, Modal, Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { createStyles } from "./styles";
 
 type Option = {
@@ -21,16 +22,17 @@ export default function SelectModal({ onChange, options, iconName }: Props) {
 
   const styles = createStyles(theme);
 
-  const { openSearch, setOpenSearch } = useWeather();
+  const { openSearch, setOpenSearch } = useWeather(); // Estado global para abrir/fechar o modal
 
   return (
     <Modal visible={openSearch} transparent animationType="fade">
-      <View style={styles.modalContainer}>
+      <SafeAreaView style={styles.modalContainer}>
+        {/* Overlay clicável para fechar o modal ao tocar fora */}
         <Pressable
           style={styles.overlay}
           onPress={() => setOpenSearch(false)}
         />
-
+        {/* lista  */}
         <View
           style={[styles.listContainer, { backgroundColor: theme.colors.card }]}
         >
@@ -62,7 +64,7 @@ export default function SelectModal({ onChange, options, iconName }: Props) {
             )}
           />
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }
