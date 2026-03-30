@@ -1,37 +1,146 @@
 import { useWeather } from "@/context/WeatherContext";
-import React, { useRef } from "react";
-import { FlatList, View } from "react-native";
+import { useFetch } from "@/hooks/useFetch";
+import { useTheme } from "@/theme/ThemeProvider";
+import { ForecastResponseType } from "@/types/weather";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, RefreshControl, View } from "react-native";
 import ForecastCard from "../cards/ForecastCard";
+import EmptyState from "../EmptyState";
+import ErrorModal from "../ErrorModal";
+import Loading from "../Loading";
 
 export default function ForecastList() {
-  const { response, setScrollForecast } = useWeather();
+  const { setScrollForecast } = useWeather();
+  const { theme } = useTheme();
+  const [showError, setShowError] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const data = response?.list;
+  const { setResponse, setSelectedForecast, citySearch, response } =
+    useWeather();
+
+  const { data, loading, error, fetchData } = useFetch<ForecastResponseType>({
+    url: "https://api.openweathermap.org/data/2.5/forecast",
+  });
+
+  const fetchWeather = async (shouldReset: boolean) => {
+    if (shouldReset) {
+      setResponse(null);
+      setSelectedForecast(null);
+    }
+
+    const result = await fetchData({
+      params: {
+        q: citySearch,
+        appid: process.env.EXPO_PUBLIC_WEATHER_KEY,
+        units: "metric",
+        lang: "pt_br",
+      },
+    });
+
+    if (result != null) {
+      setResponse(result);
+      setSelectedForecast(result.list[0]);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather(true);
+  }, [citySearch]);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+
+    await fetchWeather(false);
+
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setSelectedForecast(data.list[0]);
+      setResponse(data);
+    }
+  }, [data]);
 
   const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
     if (viewableItems.length > 0) {
       setScrollForecast(viewableItems[0].item);
     }
   }).current;
-  if (!data) return null;
+
+  useEffect(() => {
+    if (error) setShowError(true);
+  }, [error]);
 
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };
 
+  const renderItem = useCallback(
+    ({ item }) => <ForecastCard item={item} />,
+    [],
+  );
+
+  const renderEmpty = () => {
+    if (!isEmpty) return null;
+
+    if (refreshing) return null;
+
+    if (loading) return <Loading />;
+
+    return (
+      <EmptyState
+        title="Sem dados"
+        description="Não foi possível carregar o clima"
+        icon="cloud-offline-outline"
+      />
+    );
+  };
+
+  const listData = response?.list ?? [];
+  const isEmpty = listData.length === 0;
+  const ITEM_WIDTH = 102;
   return (
     <View>
       <FlatList
-        data={data}
+        data={listData}
         keyExtractor={(item) => item.dt.toString()}
         horizontal
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
         showsHorizontalScrollIndicator={false}
+        initialNumToRender={10} // Otimizações de performance
+        maxToRenderPerBatch={10} // Otimizações de performance
+        windowSize={5} // Otimizações de performance
+        ListEmptyComponent={renderEmpty}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={[theme.colors.primary]}
+            tintColor={theme.colors.primary}
+            progressBackgroundColor={theme.colors.card}
+          />
+        }
+        getItemLayout={(_, index) => ({
+          length: ITEM_WIDTH,
+          offset: ITEM_WIDTH * index,
+          index,
+        })}
         contentContainerStyle={{
           paddingHorizontal: 36,
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        renderItem={({ item }) => <ForecastCard item={item} />}
+        renderItem={renderItem}
+      />
+
+      {/* Modal de erros */}
+      <ErrorModal
+        visible={showError}
+        message={error}
+        onClose={() => setShowError(false)}
       />
     </View>
   );

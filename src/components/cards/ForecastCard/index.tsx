@@ -10,7 +10,8 @@ type Props = {
 };
 
 import { useWeather } from "@/context/WeatherContext";
-export default function ForecastCard({ item }: Props) {
+import { memo } from "react";
+export function ForecastCard({ item }: Props) {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const { setSelectedForecast, selectedForecast, response } = useWeather();
@@ -64,3 +65,6 @@ export default function ForecastCard({ item }: Props) {
     </TouchableOpacity>
   );
 }
+export default memo(ForecastCard, (prev, next) => {
+  return prev.item.dt === next.item.dt;
+});

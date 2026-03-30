@@ -17,7 +17,7 @@ export function useFetch<T>({ url, config }: UseFetchProps) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = useCallback(
-    async (customConfig?: AxiosRequestConfig) => {
+    async (customConfig?: AxiosRequestConfig): Promise<T | null> => {
       try {
         setLoading(true);
         setError(null);
@@ -29,6 +29,8 @@ export function useFetch<T>({ url, config }: UseFetchProps) {
         });
 
         setData(response.data);
+
+        return response.data;
       } catch (err: unknown) {
         let message = "Erro na requisição";
 
@@ -42,6 +44,8 @@ export function useFetch<T>({ url, config }: UseFetchProps) {
         }
 
         setError(message);
+
+        return null;
       } finally {
         setLoading(false);
       }
