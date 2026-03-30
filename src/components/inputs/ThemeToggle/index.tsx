@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useMemo } from "react";
+import React from "react";
 import { Switch, View } from "react-native";
 import { useTheme } from "../../../theme/ThemeProvider";
 import { createStyles } from "./styles";
@@ -7,7 +7,7 @@ import { createStyles } from "./styles";
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = createStyles(theme);
 
   const isDark = theme.mode === "dark";
 

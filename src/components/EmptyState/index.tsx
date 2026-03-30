@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useMemo } from "react";
+import React from "react";
 import { Text, View } from "react-native";
 import { useTheme } from "../../theme/ThemeProvider";
 import { createStyles } from "./styles";
@@ -17,7 +17,7 @@ export default function EmptyState({
 }: Readonly<Props>) {
   const { theme } = useTheme();
 
-  const styles = useMemo(() => createStyles(theme), [theme]);
+  const styles = createStyles(theme);
 
   return (
     <View style={styles.container}>

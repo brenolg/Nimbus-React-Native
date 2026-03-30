@@ -15,8 +15,6 @@ export default function ForecastList() {
   }).current;
   if (!data) return null;
 
-  console.log(data[0]);
-
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 50,
   };

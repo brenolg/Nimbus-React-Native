@@ -1,0 +1,16 @@
+export const cityOptions = [
+  { label: "Belo Horizonte", value: "Belo Horizonte" },
+  { label: "São Paulo", value: "Sao Paulo" },
+  { label: "Rio de Janeiro", value: "Rio de Janeiro" },
+  { label: "Brasilia", value: "Brasilia" },
+  { label: "Curitiba", value: "Curitiba" },
+  { label: "Fortaleza", value: "Fortaleza" },
+  { label: "Recife", value: "Recife" },
+  { label: "Porto Alegre", value: "Porto Alegre" },
+  { label: "Manaus", value: "Manaus" },
+  { label: "Belem", value: "Belem" },
+  { label: "Goiania", value: "Goiania" },
+  { label: "Florianópolis", value: "Florianopolis" },
+  { label: "Vitoria", value: "Vitoria" },
+  { label: "Campo Grande", value: "Campo Grande" },
+];

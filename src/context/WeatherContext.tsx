@@ -55,7 +55,7 @@ export function WeatherProvider({ children }: Props) {
       openSearch,
       setOpenSearch,
     }),
-    [response, selectedForecast, scrollForecast],
+    [response, selectedForecast, scrollForecast, citySearch, openSearch],
   );
 
   return (
