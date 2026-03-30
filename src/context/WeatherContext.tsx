@@ -1,15 +1,29 @@
 import { ForecastResponseType, WeatherItemType } from "@/types/weather";
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 type WeatherContextType = {
   response: ForecastResponseType | null;
-  setResponse: (data: ForecastResponseType) => void;
+  setResponse: Dispatch<SetStateAction<ForecastResponseType | null>>;
 
   selectedForecast: WeatherItemType | null;
-  setSelectedForecast: (item: WeatherItemType | null) => void;
+  setSelectedForecast: Dispatch<SetStateAction<WeatherItemType | null>>;
 
   scrollForecast: WeatherItemType | null;
-  setScrollForecast: (item: WeatherItemType | null) => void;
+  setScrollForecast: Dispatch<SetStateAction<WeatherItemType | null>>;
+
+  citySearch: string;
+  setCitySearch: Dispatch<SetStateAction<string>>;
+
+  openSearch: boolean;
+  setOpenSearch: Dispatch<SetStateAction<boolean>>;
 };
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
@@ -25,6 +39,8 @@ export function WeatherProvider({ children }: Props) {
   const [scrollForecast, setScrollForecast] = useState<WeatherItemType | null>(
     null,
   );
+  const [citySearch, setCitySearch] = useState<string>("Belo Horizonte");
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
 
   const value = useMemo(
     () => ({
@@ -34,6 +50,10 @@ export function WeatherProvider({ children }: Props) {
       setSelectedForecast,
       scrollForecast,
       setScrollForecast,
+      citySearch,
+      setCitySearch,
+      openSearch,
+      setOpenSearch,
     }),
     [response, selectedForecast, scrollForecast],
   );
